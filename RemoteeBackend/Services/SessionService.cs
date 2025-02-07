@@ -4,35 +4,46 @@ using System.Collections.Concurrent;
 namespace RemoteAccess.Services
 {
     public class SessionService
+{
+    private static readonly ConcurrentDictionary<string, int> _sessionConnections = new ConcurrentDictionary<string, int>();
+
+    public string CreateSession()
     {
-        private readonly ConcurrentDictionary<string, string> _activeSessions = new();
+    string sessionId = Guid.NewGuid().ToString();
 
-        public string CreateSessionId()
-        {
-            string sessionId = Guid.NewGuid().ToString();
-            _activeSessions.TryAdd(sessionId, string.Empty);
-            return sessionId;
-        }
+    _sessionConnections[sessionId] = 1;
 
-        public bool TrySetOwner(string sessionId, string connectionId)
-        {
-            return _activeSessions.TryAdd(sessionId, connectionId);
-        }
+    return sessionId;
+    }   
 
-        public bool IsSessionTaken(string sessionId)
-        {
-            return _activeSessions.ContainsKey(sessionId);
-        }
+    public void AddConnectionToSession(string sessionId)
+    {
 
-        public string? GetOwner(string sessionId)
-        {
-            _activeSessions.TryGetValue(sessionId, out var owner);
-            return owner;
-        }
+        _sessionConnections.AddOrUpdate(sessionId, 1, (key, oldValue) => oldValue + 1);
+    }
 
-        public void RemoveSession(string sessionId)
+    public void RemoveSession(string sessionId)
+    {
+
+        if (_sessionConnections.ContainsKey(sessionId) && _sessionConnections[sessionId] <= 0)
         {
-            _activeSessions.TryRemove(sessionId, out _);
+            _sessionConnections.TryRemove(sessionId, out _);
         }
     }
+
+    public bool IsSessionExists(string sessionId)
+    {
+
+    return _sessionConnections.ContainsKey(sessionId);
+    }
+
+
+    public int GetGroupConnectionCount(string sessionId)
+    {
+        return _sessionConnections.ContainsKey(sessionId) ? _sessionConnections[sessionId] : 0;
+    }
 }
+
+
+}
+

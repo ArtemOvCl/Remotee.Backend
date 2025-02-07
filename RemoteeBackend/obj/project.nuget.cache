@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "9UEGMT9h+d8=",
+  "dgSpecHash": "2+FiDzHBPTc=",
   "success": true,
-  "projectFilePath": "C:\\Users\\artem\\OneDrive\\Документы\\GitHub\\Remotee\\RemoteeBackend\\RemoteeBackend.csproj",
+  "projectFilePath": "C:\\Users\\artem\\OneDrive\\Документы\\GitHub\\Remotee.Backend\\RemoteeBackend\\RemoteeBackend.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\artem\\.nuget\\packages\\microsoft.aspnetcore.authentication.abstractions\\2.3.0\\microsoft.aspnetcore.authentication.abstractions.2.3.0.nupkg.sha512",
     "C:\\Users\\artem\\.nuget\\packages\\microsoft.aspnetcore.authorization\\2.3.0\\microsoft.aspnetcore.authorization.2.3.0.nupkg.sha512",

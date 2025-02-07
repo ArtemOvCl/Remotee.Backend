@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 
 namespace RemoteAccess.Hubs
 {
-    public class SessionHub : Hub<ISessionHub>
+    public class SessionHub : Hub
     {
         private readonly SessionService _sessionService;
-        private static string? _computerConnectionId;
+        private const int MaxConnectionsPerSession = 2;
 
         public SessionHub(SessionService sessionService)
         {
@@ -17,42 +17,40 @@ namespace RemoteAccess.Hubs
 
         public async Task<string> CreateSession()
         {
-
-            _computerConnectionId ??= Context.ConnectionId;
-
-            string sessionId = _sessionService.CreateSessionId();
+            string sessionId = _sessionService.CreateSession();
             await Groups.AddToGroupAsync(Context.ConnectionId, sessionId);
-            return sessionId; 
+            return sessionId;
         }
 
-        public async Task<bool> JoinSession(string sessionId)
+        public async Task JoinSession(string sessionId)
         {
-            if (_sessionService.IsSessionTaken(sessionId))  
+            if (!_sessionService.IsSessionExists(sessionId))
             {
-                await Groups.AddToGroupAsync(Context.ConnectionId, sessionId); 
-                return true;
+
+                await Clients.Caller.SendAsync("Error", "Session is not found");
+                return;
             }
 
-            return false;
-        }
-
-        public override async Task OnDisconnectedAsync(Exception? exception)
-        {
-            var sessionId = _sessionService.GetOwner(Context.ConnectionId);
-            if (sessionId != null)
+            var groupConnectionsCount = _sessionService.GetGroupConnectionCount(sessionId);
+            if (groupConnectionsCount >= MaxConnectionsPerSession)
             {
-                _sessionService.RemoveSession(sessionId); 
+                
+                await Clients.Caller.SendAsync("Error", "Session is not found");
+                return;
             }
 
-            await base.OnDisconnectedAsync(exception);
+            await Groups.AddToGroupAsync(Context.ConnectionId, sessionId);
+            await Clients.Group(sessionId).SendAsync("ReceiveMessage", $"Користувач приєднався до сесії {sessionId}");
         }
 
-        public string GetComputerConnectionId()
+        public async Task RemoveSession(string sessionId)
         {
-
-#pragma warning disable CS8603
-            return _computerConnectionId;
-#pragma warning restore CS8603
+            if (_sessionService.IsSessionExists(sessionId))
+            {
+                _sessionService.RemoveSession(sessionId);
+                await Clients.Group(sessionId).SendAsync("SessionEnded", $"Сесія {sessionId} завершена");
+            }
         }
+
     }
 }

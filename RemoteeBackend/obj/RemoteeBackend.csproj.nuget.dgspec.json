@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\artem\\OneDrive\\Документы\\GitHub\\Remotee\\RemoteeBackend\\RemoteeBackend.csproj": {}
+    "C:\\Users\\artem\\OneDrive\\Документы\\GitHub\\Remotee.Backend\\RemoteeBackend\\RemoteeBackend.csproj": {}
   },
   "projects": {
-    "C:\\Users\\artem\\OneDrive\\Документы\\GitHub\\Remotee\\RemoteeBackend\\RemoteeBackend.csproj": {
+    "C:\\Users\\artem\\OneDrive\\Документы\\GitHub\\Remotee.Backend\\RemoteeBackend\\RemoteeBackend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\artem\\OneDrive\\Документы\\GitHub\\Remotee\\RemoteeBackend\\RemoteeBackend.csproj",
+        "projectUniqueName": "C:\\Users\\artem\\OneDrive\\Документы\\GitHub\\Remotee.Backend\\RemoteeBackend\\RemoteeBackend.csproj",
         "projectName": "RemoteeBackend",
-        "projectPath": "C:\\Users\\artem\\OneDrive\\Документы\\GitHub\\Remotee\\RemoteeBackend\\RemoteeBackend.csproj",
+        "projectPath": "C:\\Users\\artem\\OneDrive\\Документы\\GitHub\\Remotee.Backend\\RemoteeBackend\\RemoteeBackend.csproj",
         "packagesPath": "C:\\Users\\artem\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\artem\\OneDrive\\Документы\\GitHub\\Remotee\\RemoteeBackend\\obj\\",
+        "outputPath": "C:\\Users\\artem\\OneDrive\\Документы\\GitHub\\Remotee.Backend\\RemoteeBackend\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
