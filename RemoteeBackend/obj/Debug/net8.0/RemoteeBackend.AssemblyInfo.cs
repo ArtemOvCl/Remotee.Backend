@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("RemoteeBackend")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b25a9275d8a7704595874522ee330e29add3183e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5cebe8f03f5f72c64f0a835e14b23fb492924fd8")]
 [assembly: System.Reflection.AssemblyProductAttribute("RemoteeBackend")]
 [assembly: System.Reflection.AssemblyTitleAttribute("RemoteeBackend")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

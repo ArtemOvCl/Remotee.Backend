@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace RemoteAccess.Hubs
 {
-    public class SessionHub : Hub
+    public class SessionHub : Hub<ISessionHub>
     {
         private readonly SessionService _sessionService;
         private const int MaxConnectionsPerSession = 2;
@@ -17,6 +17,7 @@ namespace RemoteAccess.Hubs
 
         public async Task<string> CreateSession()
         {
+            
             string sessionId = _sessionService.CreateSession();
             await Groups.AddToGroupAsync(Context.ConnectionId, sessionId);
             return sessionId;
@@ -24,33 +25,32 @@ namespace RemoteAccess.Hubs
 
         public async Task JoinSession(string sessionId)
         {
+
             if (!_sessionService.IsSessionExists(sessionId))
             {
-
-                await Clients.Caller.SendAsync("Error", "Session is not found");
+                await Clients.Caller.Error("Session is not found");
                 return;
             }
 
             var groupConnectionsCount = _sessionService.GetGroupConnectionCount(sessionId);
             if (groupConnectionsCount >= MaxConnectionsPerSession)
             {
-                
-                await Clients.Caller.SendAsync("Error", "Session is not found");
+                await Clients.Caller.Error("Session is not found");
                 return;
             }
 
             await Groups.AddToGroupAsync(Context.ConnectionId, sessionId);
-            await Clients.Group(sessionId).SendAsync("ReceiveMessage", $"Користувач приєднався до сесії {sessionId}");
+            await Clients.Group(sessionId).ReceiveMessage($"User joined to pc {sessionId}");
         }
 
         public async Task RemoveSession(string sessionId)
         {
+
             if (_sessionService.IsSessionExists(sessionId))
             {
                 _sessionService.RemoveSession(sessionId);
-                await Clients.Group(sessionId).SendAsync("SessionEnded", $"Сесія {sessionId} завершена");
+                await Clients.Group(sessionId).SessionEnded($"Session {sessionId} is ended");
             }
         }
-
     }
 }
